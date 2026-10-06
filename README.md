@@ -13,8 +13,11 @@ Up-to-date visual implementation of the popular open iOS utility [UxPlay](https:
 ## Install
 ### Prerequisites
 - A working installation of UxPlay (see [#packaging](https://github.com/FDH2/UxPlay#packaging-status-linux-and-bsd-distributions) or [#build](https://github.com/FDH2/UxPlay#building-uxplay-from-source) to build from source)
-### ...
-TBD
+
+
+> [!TIP]
+> This project is currently being worked on, stay tuned for it's release soon!
+
 ## Contributing
 See [CONTRIBUTING.md](https://github.com/iOpenInterconnect/UxPlay-TUI/blob/main/CONTRIBUTING.md)
 ## Branch Overview
