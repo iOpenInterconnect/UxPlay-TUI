@@ -1,0 +1,20 @@
+
+[package]
+name = "uxplay-tui"
+version = "0.1.0"
+edition = "2021"
+
+authors = ["JMGstudios <jmgstudios@proton.me>"]
+description = "A Terminal User Interface to manage the popular open iOS utility UxPlay"
+repository = "https://github.com/iOpenInterconnect/uxplay-tui"
+readme = "README.md"
+license = "MIT"
+license-file = "LICENSE"
+keywords = ["uxplay", "airplay", "airplay-audio", "tui"]
+categories = ["command-line-utilities"]
+publish = false
+
+
+[dependencies]
+superlighttui = "0.17.1"
+sysinfo = "0.39.6"

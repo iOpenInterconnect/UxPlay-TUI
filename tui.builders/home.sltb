@@ -1,0 +1,506 @@
+{
+  "version": "1.0",
+  "meta": {
+    "name": "dashboard-app",
+    "description": "Live dashboard with sidebar navigation",
+    "author": "",
+    "created": "2026-10-06T20:31:09.523Z",
+    "modified": "2026-10-09T17:22:21.347Z"
+  },
+  "tree": {
+    "id": "RtynV5KVgS",
+    "type": "container",
+    "name": "Root",
+    "props": {},
+    "style": {},
+    "layout": {
+      "direction": "column",
+      "grow": 1,
+      "gap": 1
+    },
+    "locked": false,
+    "visible": true,
+    "children": [
+      {
+        "id": "6JR844ldoH",
+        "type": "container",
+        "name": "Header",
+        "props": {},
+        "style": {},
+        "layout": {
+          "direction": "row",
+          "border": "rounded",
+          "padding": {
+            "x": 2,
+            "y": 0
+          },
+          "gap": 1
+        },
+        "locked": false,
+        "visible": true,
+        "children": [
+          {
+            "id": "GiDq02vGFi",
+            "type": "timer_display",
+            "name": "Timer",
+            "props": {
+              "elapsedSeconds": 3723.4
+            },
+            "style": {},
+            "layout": {},
+            "locked": false,
+            "visible": true
+          },
+          {
+            "id": "HpCSio6pOV",
+            "type": "spacer",
+            "name": "space_top",
+            "props": {},
+            "style": {},
+            "layout": {
+              "width": 68
+            },
+            "locked": false,
+            "visible": true
+          },
+          {
+            "id": "YXtlmkcd_w",
+            "type": "text",
+            "name": "Title",
+            "props": {
+              "content": "UxPlay-TUI"
+            },
+            "style": {
+              "bold": true,
+              "fg": {
+                "type": "named",
+                "value": "Cyan"
+              }
+            },
+            "layout": {},
+            "locked": false,
+            "visible": true
+          },
+          {
+            "id": "alO3oXcyBI",
+            "type": "badge",
+            "name": "Live",
+            "props": {
+              "label": "Live"
+            },
+            "style": {},
+            "layout": {},
+            "locked": false,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "id": "gLtGI2T-eX",
+        "type": "container",
+        "name": "Body",
+        "props": {},
+        "style": {},
+        "layout": {
+          "direction": "row",
+          "grow": 1,
+          "gap": 1
+        },
+        "locked": false,
+        "visible": true,
+        "children": [
+          {
+            "id": "17BIvcGkoh",
+            "type": "container",
+            "name": "Sidebar",
+            "props": {},
+            "style": {},
+            "layout": {
+              "direction": "column",
+              "width": 30,
+              "border": "single",
+              "padding": 1,
+              "gap": 1
+            },
+            "locked": false,
+            "visible": true,
+            "children": [
+              {
+                "id": "LfMjwgNhI3",
+                "type": "divider_text",
+                "name": "NavDiv",
+                "props": {
+                  "label": "Navigation"
+                },
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "Ovv5CGR_1T",
+                "type": "list",
+                "name": "Nav",
+                "props": {
+                  "items": [
+                    "Overview",
+                    "General settings"
+                  ]
+                },
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "i3qjaCD3w8",
+                "type": "spacer",
+                "name": "Spacer",
+                "props": {},
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "LqMkhsuebB",
+                "type": "divider_text",
+                "name": "FactsDiv",
+                "props": {
+                  "label": "Quick Facts"
+                },
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "6HYquDhCEL",
+                "type": "definition_list",
+                "name": "Facts",
+                "props": {
+                  "items": [
+                    {
+                      "term": "Version",
+                      "value": "[version]"
+                    },
+                    {
+                      "term": "MAC",
+                      "value": "[xx:xx:xx:xx:xx:xx]"
+                    },
+                    {
+                      "term": "UDP",
+                      "value": "[ports]"
+                    },
+                    {
+                      "term": "TCP",
+                      "value": "[ports]"
+                    }
+                  ]
+                },
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "A8d7MJWGCb",
+                "type": "spacer",
+                "name": "Spacer",
+                "props": {},
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "3QXeOLE_Bz",
+                "type": "divider_text",
+                "name": "ClientFactsDiv",
+                "props": {
+                  "label": "Client Info"
+                },
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "Vsje6fUgV3",
+                "type": "container",
+                "name": "connectionWait",
+                "props": {},
+                "style": {},
+                "layout": {
+                  "direction": "column"
+                },
+                "locked": false,
+                "visible": true,
+                "children": [
+                  {
+                    "id": "coSD_UhQxv",
+                    "type": "empty_state",
+                    "name": "EmptyState",
+                    "props": {
+                      "title": "No connection yet",
+                      "description": "Connect to a client!"
+                    },
+                    "style": {},
+                    "layout": {},
+                    "locked": false,
+                    "visible": true
+                  }
+                ]
+              },
+              {
+                "id": "x8eLpmSQt9",
+                "type": "spacer",
+                "name": "Spacer",
+                "props": {},
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "GYIENVIyoM",
+                "type": "separator",
+                "name": "Separator",
+                "props": {},
+                "style": {},
+                "layout": {},
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "1A_1mOUnEk",
+                "type": "container",
+                "name": "connectionWait",
+                "props": {},
+                "style": {},
+                "layout": {
+                  "direction": "column"
+                },
+                "locked": false,
+                "visible": true,
+                "children": [
+                  {
+                    "id": "DXys1XYo_S",
+                    "type": "spinner",
+                    "name": "Spinner",
+                    "props": {},
+                    "style": {},
+                    "layout": {
+                      "align": "start",
+                      "border": "none",
+                      "borderRight": true,
+                      "borderBottom": true,
+                      "borderLeft": true
+                    },
+                    "locked": false,
+                    "visible": true
+                  },
+                  {
+                    "id": "-v9L5YPnXN",
+                    "type": "text",
+                    "name": "Waiting",
+                    "props": {
+                      "content": "Waiting for connections..",
+                      "wrap": true
+                    },
+                    "style": {},
+                    "layout": {
+                      "border": "none"
+                    },
+                    "locked": false,
+                    "visible": true
+                  }
+                ]
+              },
+              {
+                "id": "bmRWFjvJ0f",
+                "type": "container",
+                "name": "connectionSuccessfull",
+                "props": {},
+                "style": {},
+                "layout": {
+                  "direction": "column"
+                },
+                "locked": false,
+                "visible": true,
+                "children": [
+                  {
+                    "id": "p94DyFpv_k",
+                    "type": "badge",
+                    "name": "Badge",
+                    "props": {
+                      "label": "Connection successfull!"
+                    },
+                    "style": {},
+                    "layout": {},
+                    "locked": false,
+                    "visible": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "4qAtJlnLDf",
+            "type": "container",
+            "name": "Main",
+            "props": {},
+            "style": {},
+            "layout": {
+              "direction": "column",
+              "grow": 1,
+              "gap": 1
+            },
+            "locked": false,
+            "visible": true,
+            "children": [
+              {
+                "id": "jSJ55qezwp",
+                "type": "container",
+                "name": "Stats",
+                "props": {},
+                "style": {},
+                "layout": {
+                  "direction": "row",
+                  "gap": 1
+                },
+                "locked": false,
+                "visible": true,
+                "children": [
+                  {
+                    "id": "zAar8ML7sN",
+                    "type": "alert",
+                    "name": "Running",
+                    "props": {
+                      "message": "Running",
+                      "level": "success"
+                    },
+                    "style": {},
+                    "layout": {},
+                    "locked": false,
+                    "visible": true
+                  },
+                  {
+                    "id": "qObmEXxULY",
+                    "type": "alert",
+                    "name": "Not running",
+                    "props": {
+                      "message": "Not running",
+                      "level": "warning"
+                    },
+                    "style": {},
+                    "layout": {},
+                    "locked": false,
+                    "visible": true
+                  },
+                  {
+                    "id": "x1geOP1uPs",
+                    "type": "spacer",
+                    "name": "Spacer",
+                    "props": {},
+                    "style": {},
+                    "layout": {},
+                    "locked": false,
+                    "visible": true
+                  }
+                ]
+              },
+              {
+                "id": "_3AvNGwQlD",
+                "type": "button",
+                "name": "Start",
+                "props": {
+                  "label": "Start server",
+                  "variant": "secondary"
+                },
+                "style": {},
+                "layout": {
+                  "align": "end"
+                },
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "KvOg4Okm6r",
+                "type": "button",
+                "name": "End",
+                "props": {
+                  "label": "Terminate server",
+                  "variant": "secondary"
+                },
+                "style": {},
+                "layout": {
+                  "align": "end"
+                },
+                "locked": false,
+                "visible": true
+              },
+              {
+                "id": "6QH5Yb9_12",
+                "type": "scrollable",
+                "name": "Scrollable",
+                "props": {
+                  "scrollHeight": 20
+                },
+                "style": {},
+                "layout": {
+                  "direction": "column",
+                  "heightPct": 80
+                },
+                "locked": false,
+                "visible": true,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "JQ9j0oP4T8",
+        "type": "help",
+        "name": "HelpBar",
+        "props": {
+          "bindings": [
+            {
+              "key": "q",
+              "description": "quit"
+            },
+            {
+              "key": "Tab",
+              "description": "focus"
+            },
+            {
+              "key": "Enter",
+              "description": "select"
+            },
+            {
+              "key": "r",
+              "description": "refresh"
+            },
+            {
+              "key": "?",
+              "description": "help"
+            }
+          ]
+        },
+        "style": {},
+        "layout": {},
+        "locked": false,
+        "visible": true
+      }
+    ]
+  },
+  "theme": {
+    "preset": "dark"
+  },
+  "terminal": {
+    "width": 118,
+    "height": 37,
+    "colorDepth": "truecolor"
+  }
+}
