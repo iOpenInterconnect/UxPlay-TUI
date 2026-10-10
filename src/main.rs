@@ -1,14 +1,54 @@
-use slt::{AlertLevel, Border, ButtonVariant, Color, Context, ListState, RunConfig, ScrollState, SpinnerState, Theme};
-use std::time::{Duration, Instant};
+use slt::{AlertLevel, Border, ButtonVariant, Color, Context, ListState, RunConfig, RichLogState, SpinnerState, Theme};
+use std::{
+    io::{Read, BufRead, BufReader, Write},
+    process::{Child, Command, Stdio},
+    sync::mpsc::{self, Receiver, Sender},
+    thread,
+    time::{Duration, Instant},
+};
+
+fn forward_lines<R>(
+    reader: R,
+    tx: Sender<String>,
+    prefix: &'static str,
+)
+where
+    R: Read + Send + 'static,
+{
+    thread::spawn(move || {
+        let reader = BufReader::new(reader);
+
+        for line in reader.lines() {
+            match line {
+                Ok(line) => {
+                    if tx.send(format!("[{prefix}] {line}")).is_err() {
+                        break;
+                    }
+                }
+                Err(error) => {
+                    let _ = tx.send(format!(
+                        "[ERROR] Log stream: {error}"
+                    ));
+                    break;
+                }
+            }
+        }
+    });
+}
 
 fn main() -> std::io::Result<()> {
     let mut nav = ListState::new(vec!["Overview", "General settings"]);
     let mut spinner = SpinnerState::dots();
-    let mut scrollable = ScrollState::new();
+    let mut richlog = RichLogState::new();
+    richlog.max_entries = Some(200);
+
     let mut server_running = false;
     let mut connected = false;
     let mut elapsed = Duration::ZERO;
     let mut started = Instant::now();
+
+    let mut child_process: Option<Child> = None;
+    let (log_tx, log_rx) = mpsc::channel::<String>();
 
     slt::run_with(
         RunConfig::default()
@@ -17,6 +57,10 @@ fn main() -> std::io::Result<()> {
             .tick_rate(Duration::from_millis(16)),
         |ui: &mut Context| {
             if ui.key('q') { ui.quit(); }
+
+            for line in log_rx.try_iter() {
+                richlog.push_plain(&line);
+            }
 
             ui.container().gap(1).grow(1).col(|ui| {
                 ui.bordered(Border::Rounded).px(2).gap(1).row(|ui| {
@@ -62,18 +106,68 @@ fn main() -> std::io::Result<()> {
                                 let _ = ui.alert("Not running", AlertLevel::Warning);
                             }
                         });
-                        if server_running {
-                            if ui.button_with("Stop server", ButtonVariant::Outline).clicked {
-                                server_running = false;
-                            }
-                        } else {
-                            if ui.button_with("Start server", ButtonVariant::Outline).clicked {
-                                elapsed = Duration::ZERO;
-                                server_running = true;
-                                started = Instant::now();
+                    if child_process.is_some() {
+                        if ui
+                            .button_with("Stop server", ButtonVariant::Outline)
+                            .clicked
+                        {
+                            server_running = false;
+                            if let Some(mut child) = child_process.take() {
+                                richlog.push_plain("[INFO] Stopping server...");
+
+                                match child.kill() {
+                                    Ok(()) => {
+                                        let _ = child.wait();
+                                        richlog.push_plain("[INFO] Server stopped.");
+                                    }
+                                    Err(error) => {
+                                        richlog.push_plain(&format!(
+                                            "[ERROR] Could not stop server: {error}"
+                                        ));
+                                    }
+                                }
                             }
                         }
-                        ui.scrollable(&mut scrollable).h(20).col(|ui| {});
+                    } else if ui
+                        .button_with("Start server", ButtonVariant::Outline)
+                        .clicked
+                    {
+                        elapsed = Duration::ZERO;
+                        richlog.push_plain("[INFO] Starting server...");
+                        server_running = true;
+
+                        match Command::new("uxplay")
+                            .args(["-p"])
+                            .stdout(Stdio::piped())
+                            .stderr(Stdio::piped())
+                            .spawn()
+                        {
+                            Ok(mut child) => {
+                                if let Some(stdout) = child.stdout.take() {
+                                    forward_lines(stdout, log_tx.clone(), "OUT");
+                                }
+
+                                if let Some(stderr) = child.stderr.take() {
+                                    forward_lines(stderr, log_tx.clone(), "ERR");
+                                }
+
+                                richlog.push_plain(&format!(
+                                    "[INFO] Process started (PID {}).",
+                                    child.id()
+                                ));
+
+                                child_process = Some(child);
+                            }
+                            Err(error) => {
+                                richlog.push_plain(&format!(
+                                    "[ERROR] Failed to start server: {error}"
+                                ));
+                            }
+                        }
+                    }
+                        ui.bordered(Border::Single).title("Server Logs").p(1).grow(1).col(|ui| {
+                            ui.rich_log(&mut richlog);
+                        });
                     });
                 });
                 let _ = ui.help(&[("q", "quit"), ("Tab", "focus"), ("Enter", "select"), ("r", "refresh"), ("?", "help")]);

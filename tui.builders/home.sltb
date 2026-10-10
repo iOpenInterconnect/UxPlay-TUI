@@ -5,7 +5,7 @@
     "description": "Live dashboard with sidebar navigation",
     "author": "",
     "created": "2026-10-06T20:31:09.523Z",
-    "modified": "2026-10-09T17:22:21.347Z"
+    "modified": "2026-10-10T15:46:13.537Z"
   },
   "tree": {
     "id": "RtynV5KVgS",
@@ -441,20 +441,31 @@
                 "visible": true
               },
               {
-                "id": "6QH5Yb9_12",
-                "type": "scrollable",
-                "name": "Scrollable",
+                "id": "VQ2zMuSfCj",
+                "type": "rich_log",
+                "name": "RichLog",
                 "props": {
-                  "scrollHeight": 20
+                  "entries": [
+                    {
+                      "text": "[INFO] Build started",
+                      "tone": "info"
+                    },
+                    {
+                      "text": "[OK] Tests passed",
+                      "tone": "success"
+                    },
+                    {
+                      "text": "[WARN] High latency detected",
+                      "tone": "warning"
+                    }
+                  ],
+                  "autoScroll": true,
+                  "maxEntries": 200
                 },
                 "style": {},
-                "layout": {
-                  "direction": "column",
-                  "heightPct": 80
-                },
+                "layout": {},
                 "locked": false,
-                "visible": true,
-                "children": []
+                "visible": true
               }
             ]
           }
